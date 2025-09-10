@@ -1,9 +1,10 @@
 use crate::error::AppError;
-use aws_config::BehaviorVersion;
+use aws_config::{BehaviorVersion, Region};
 use aws_sdk_s3::{
     Client,
     types::{Bucket, Object},
 };
+use std::env;
 
 pub struct S3Client {
     client: Client,
@@ -11,7 +12,16 @@ pub struct S3Client {
 
 impl S3Client {
     pub async fn new() -> Self {
-        let config = aws_config::load_defaults(BehaviorVersion::latest()).await;
+        let region_name =
+            env::var("AWS_DEFAULT_REGION").unwrap_or_else(|_| "eu-central-1".to_string());
+        let region = Region::new(region_name);
+
+        let config = aws_config::load_defaults(BehaviorVersion::latest())
+            .await
+            .into_builder()
+            .region(region)
+            .build();
+
         let client = Client::new(&config);
         S3Client { client }
     }
