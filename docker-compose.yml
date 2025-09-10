@@ -1,0 +1,12 @@
+services:
+  rus3:
+    build: .
+    image: rus3:latest
+    container_name: rus3
+    ports:
+      - "${APP_PORT:-3000}:${APP_PORT:-3000}" # Map host port to container port
+    environment:
+      - APP_PORT=3000
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_DEFAULT_REGION=
