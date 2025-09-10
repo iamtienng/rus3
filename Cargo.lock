@@ -1894,9 +1894,11 @@ dependencies = [
  "aws-sdk-s3",
  "axum",
  "axum-server",
+ "hyper 1.7.0",
  "serde",
  "serde_json",
  "tokio",
+ "tower",
 ]
 
 [[package]]
